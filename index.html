@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>Carte du monde</title>
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="title" content="Carte">
+    <meta name="description" itemprop="description" content="Carte du monde" />
+    <meta name="keywords" content="">
+    <meta name="author" content="Kyu, basé sur le code de Eddyk28">
+    
+    <!-- Open Graph Data -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://eddyk28.github.io/PMD%20Map/info.html">
+    <meta property="og:title" content="Eddy's Lab: Pokémon Mystery Dungeon World Map">
+    <meta property="og:description" content="A world map of the Pokémon Mystery Dungeon series.">
+    <meta property="og:image" content="https://i.imgur.com/MQXAmH3h.png">
+    
+    <!-- Twitter Data -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://eddyk28.github.io/PMD%20Map/info.html">
+    <meta property="twitter:title" content="Eddy's Lab: Pokémon Mystery Dungeon World Map">
+    <meta property="twitter:description" content="A world map of the Pokémon Mystery Dungeon series">
+    <meta property="twitter:image" content="https://i.imgur.com/MQXAmH3h.png">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" id="style-css"  href="/css/EK28.css" type="text/css" media="all" />
+    <link rel="stylesheet" id="style-css"  href="map.css" type="text/css" media="all" />
+    <script src='panzoom.js'></script>
+</head>
+
+<body onresize="pageResize()" onload="map.center()">
+
+    <noscript>
+        <style>
+            .container_map{
+                width:2048px; 
+                position:relative;
+                
+                /* -ms-transform: scale(0.6); /* IE 9 */
+                /* -webkit-transform: scale(0.6); /* Safari 3-8 */
+                /* transform: scale(0.6); */
+                -moz-transform: scale(0.6);
+                -ms-zoom: 0.6;
+                zoom:0.6;
+                
+                -webkit-transform-origin-x: 0;
+                -webkit-transform-origin-y: 0;
+                transform-origin: 0px 0px;
+                
+                pointer-events: none;
+                margin-top:5px;
+            }
+            .buttons{
+                display:none;
+            }
+            body{
+                overflow:scroll !important;
+            }
+        </style>
+    </noscript>
+
+    <style id="descale"></style>
+    <input type="checkbox" class="checkToggle" id="toggle_markers_super" checked="true" value="selected"></input>
+    <input type="checkbox" class="checkToggle" id="toggle_markers_rescue" checked="true" value="selected"></input>
+    <input type="checkbox" class="checkToggle" id="toggle_markers_explorers" checked="true"  value="selected"></input>
+    <input type="checkbox" class="checkToggle" id="toggle_markers_gates" checked="true"  value="selected"></input>
+    <input type="checkbox" class="checkToggle" id="toggle_markers_other"  value="selected"></input>
+    <input type="checkbox" class="checkToggle" id="toggle_markers_continent" checked="true" value="selected"></input>
+    
+    <div id="buttonBar">
+        <a class="toggle_label toggle_label_exit" href="info.html" class="topLink" title="Close Map"><strong>X</strong></a>
+        <label class="toggle_label" id="toggle_label_super" for="toggle_markers_super" title="Méga donjon mystère"><strong>Méga&nbsp;<img class="markDot" style="display:inline" src="MarkerSmd.svg" alt=" "></strong></label>
+        <label class="toggle_label" id="toggle_label_rescue" for="toggle_markers_rescue" title="Equipe de secours rouge/bleu"><strong>Equipe de secours&nbsp;<img class="markDot" style="display:inline" src="MarkerRt.svg" alt=" "></strong></label>
+        <label class="toggle_label" id="toggle_label_explorers" for="toggle_markers_explorers" title="Explorateurs du temps/de l'ombre/du ciel"><strong>Explorateurs&nbsp;<img class="markDot" style="display:inline" src="MarkerExp.svg" alt=" "></strong></label>
+        <label class="toggle_label" id="toggle_label_gates" for="toggle_markers_gates" title="Portes de l'infini"><strong>Portes de l'infini&nbsp;<img class="markDot" style="display:inline" src="MarkerGti.svg" alt=" "></strong></label>
+        <label class="toggle_label" id="toggle_label_other" for="toggle_markers_other" title="Autres"><strong>Autres&nbsp;<img class="markDot" style="display:inline" src="MarkerEtc.svg" alt=" "></strong></label>
+        <label class="toggle_label" id="toggle_label_continent" for="toggle_markers_continent" title="Noms des continents"><strong>Continents&nbsp;</strong></label>
+        
+    </div>
+    
+    <div id="panzoomContainer" style="width: 100%;height: 100%;">
+        <div id="panzoom">
+            
+            <div class="container_icon" id="markers_super">
+            
+                <!--Water Continent-->
+                <div class="poi marker" style="left: 892px;top: 575px;">
+                    <img class="markDot" src="MarkerSmdL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Bourg_Tranquille" class="tooltiptext descale superColor">Bourg Tranquille</a>
+                </div>
+                <div class="poi marker" style="left: 1107px;top: 562px;">
+                    <img class="markDot" src="MarkerSmdL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Loliloville" class="tooltiptext descale superColor">Loliloville</a>
+                </div>
+                <div class="poi marker" style="left: 919px;top: 568px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Buissonni%C3%A8re" class="tooltiptext descale superColor">Forêt Buissonnière</a>
+                </div>
+                <div class="poi marker" style="left: 864px;top: 567px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Kifaipeur" class="tooltiptext descale superColor">Forêt Kifaipeur</a>
+                </div>
+                <div class="poi marker" style="left: 860px;top: 644px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Col_de_la_D%C3%A9couverte" class="tooltiptext descale superColor">Col de la Découverte</a>
+                </div>
+                <div class="poi marker" style="left: 867px;top: 607px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Verdoyante" class="tooltiptext descale superColor">Forêt Verdoyante</a>
+                </div>
+                <div class="poi marker" style="left: 832px;top: 531px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mine_Rototaupe" class="tooltiptext descale superColor">Mine Rototaupe</a>
+                </div>
+                <div class="poi marker" style="left: 913px;top: 526px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Montagne_Scintillante" class="tooltiptext descale superColor">Montagne Scintillante</a>
+                </div>
+                <div class="poi marker" style="left: 977px;top: 612px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plaine_Nectar" class="tooltiptext descale superColor">Plaine Nectar</a>
+                </div>
+                <div class="poi marker" style="left: 884px;top: 601px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ossuaire_Antique" class="tooltiptext descale superColor">Ossuaire Antique</a>
+                </div>
+                <div class="poi marker" style="left: 1000px;top: 518px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Massif_Escarp%C3%A9" class="tooltiptext descale superColor">Massif Escarpé</a>
+                </div>
+                <div class="poi marker" style="left: 1037px;top: 550px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Pentedouce" class="tooltiptext descale superColor">Grotte Pentedouce</a>
+                </div>
+                <div class="poi marker" style="left: 1036px;top: 469px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Col_de_la_Grande_Bataille" class="tooltiptext descale superColor">Col de la Grande Bataille</a>
+                </div>
+                <div class="poi marker" style="left: 807px;top: 450px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mont_des_R%C3%A9v%C3%A9lations" class="tooltiptext descale superColor">Mont des Révélations</a>
+                </div>
+                <div class="poi marker" style="left: 977px;top: 339px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_de_la_Puret%C3%A9" class="tooltiptext descale superColor">Grotte de la Pureté</a>
+                </div>
+                <div class="poi marker" style="left: 943px;top: 467px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_de_l%27Entra%C3%AEnement" class="tooltiptext descale superColor">Grotte de l'Entraînement</a>
+                </div>
+                <div class="poi marker" style="left: 733px;top: 595px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plateau_Feuillu" class="tooltiptext descale superColor">Plateau Feuillu</a>
+                </div>
+                <div class="poi marker" style="left: 984px;top: 427px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_des_Sources" class="tooltiptext descale superColor">Caverne des Sources</a>
+                </div>
+                <div class="poi marker" style="left: 1023px;top: 731px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Ronchamp" class="tooltiptext descale superColor">Grotte Ronchamp</a>
+                </div>
+                <div class="poi marker" style="left: 1052px;top: 425px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Jardin_Ensoleill%C3%A9" class="tooltiptext descale superColor">Jardin Ensoleillé</a>
+                </div>
+                <div class="poi marker" style="left: 1061px;top: 691px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Sente_de_l%27Esprit_Sauvage" class="tooltiptext descale superColor">Sente de l'Esprit Sauvage</a>
+                </div>
+                <div class="poi marker" style="left: 817px;top: 492px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Lande_%C3%89lectrique" class="tooltiptext descale superColor">Lande Electrique</a>
+                </div>
+                <div class="poi marker" style="left: 1109px;top: 443px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Colline_du_Serment" class="tooltiptext descale superColor">Colline du Serment</a>
+                </div>
+                <div class="poi marker" style="left: 889px;top: 497px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Jeune_Massif_Montagneux" class="tooltiptext descale superColor">Jeune Massif Montagneux</a>
+                </div>
+                <div class="poi marker" style="left: 849px;top: 455px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Champ_Pierreux" class="tooltiptext descale superColor">Champ Pierreux</a>
+                </div>
+                <div class="poi marker" style="left: 918px;top: 656px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Champ_Bizarre" class="tooltiptext descale superColor">Champ Bizarre</a>
+                </div>
+                <div class="poi marker" style="left: 833px;top: 373px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Prairie_Miniature" class="tooltiptext descale superColor">Prairie Miniature</a>
+                </div>
+                <div class="poi marker" style="left: 970px;top: 651px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Rivi%C3%A8re_Tartard" class="tooltiptext descale superColor">Rivière Tartard</a>
+                </div>
+                <div class="poi marker" style="left: 916px;top: 721px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Prairie_Labyrinthique" class="tooltiptext descale superColor">Prairie Labyrinthique</a>
+                </div>
+                <div class="poi marker" style="left: 848px;top: 414px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Col_des_%C3%89boulis" class="tooltiptext descale superColor">Col des Eboulis</a>
+                </div>
+                <div class="poi marker" style="left: 761px;top: 537px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Donjon_du_P%C3%A9ril" class="tooltiptext descale superColor">Donjon du Péril</a>
+                </div>
+                <div class="poi marker" style="left: 1262px;top: 712px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Vall%C3%A9e_Festive" class="tooltiptext descale superColor">Vallée Festive</a>
+                </div>
+                <div class="poi marker" style="left: 811px;top: 649px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Antre_de_la_Cascade" class="tooltiptext descale superColor">Antre de la Cascade</a>
+                </div>
+                
+                <!--Air Continent-->
+                <div class="poi marker" style="left: 1440px;top: 459px;">
+                    <img class="markDot" src="MarkerSmdL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Param-les-Vents" class="tooltiptext descale superColor">Param-les-Vents</a>
+                </div>
+                <div class="poi marker" style="left: 1551px;top: 369px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_des_Baies" class="tooltiptext descale superColor">Forêt des Baies</a>
+                </div>
+                <div class="poi marker" style="left: 1433px;top: 312px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_des_Cadeaux" class="tooltiptext descale superColor">Forêt des Cadeaux</a>
+                </div>
+                <div class="poi marker" style="left: 1525px;top: 410px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Mystique" class="tooltiptext descale superColor">Forêt Mystique</a>
+                </div>
+                <div class="poi marker" style="left: 1824px;top: 538px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plaine_Myst%C3%A9rieuse" class="tooltiptext descale superColor">Plaine Mystérieuse</a>
+                </div>
+                <div class="poi marker" style="left: 1769px;top: 377px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Petites_Dunes" class="tooltiptext descale superColor">Petites Dunes</a>
+                </div>
+                <div class="poi marker" style="left: 1811px;top: 458px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Universelle" class="tooltiptext descale superColor">Forêt Universelle</a>
+                </div>
+                <div class="poi marker" style="left: 1251px;top: 517px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_Sous-Marine" class="tooltiptext descale superColor">Caverne Sous-Marine</a>
+                </div>
+                <div class="poi marker" style="left: 1308px;top: 484px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ruines_Antiques_(Donjon_Myst%C3%A8re_4)" class="tooltiptext descale superColor">Ruines Antiques</a>
+                </div>
+                <div class="poi marker" style="left: 1699px;top: 398px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_des_Super-Pommes" class="tooltiptext descale superColor">Forêt des Super-Pommes</a>
+                </div>
+                <div class="poi marker" style="left: 1842px;top: 223px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Pic_des_%C3%89preuves" class="tooltiptext descale superColor">Pic des Epreuves</a>
+                </div>
+                <div class="poi marker" style="left: 1696px;top: 304px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Gorges_Pures" class="tooltiptext descale superColor">Gorges Pures</a>
+                </div>
+                <div class="poi marker" style="left: 1845px;top: 110px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Fontaine_des_R%C3%A9solutions" class="tooltiptext descale superColor">Fontaine des Résolutions</a>
+                </div>
+                <div class="poi marker" style="left: 1865px;top: 638px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Point_Jaune" class="tooltiptext descale superColor">Point Jaune</a>
+                </div>
+                <div class="poi marker" style="left: 1701px;top: 744px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Point_Rouge" class="tooltiptext descale superColor">Point Rouge</a>
+                </div>
+                <div class="poi marker" style="left: 1821px;top: 729px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_Fant%C3%B4me" class="tooltiptext descale superColor">Île Fantôme</a>
+                </div>
+                <div class="poi marker" style="left: 1511px;top: 536px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Tunnel_Accident%C3%A9" class="tooltiptext descale superColor">Tunnel Accidenté</a>
+                </div>
+                <div class="poi marker" style="left: 1409px;top: 229px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_du_Clair_de_Lune" class="tooltiptext descale superColor">Grotte du Clair de Lune</a>
+                </div>
+                <div class="poi marker" style="left: 1263px;top: 233px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Marches_du_Bosquet_Gel%C3%A9" class="tooltiptext descale superColor">Marche du Bosquet Gelé</a>
+                </div>
+                
+                <!--Grass Continent-->
+                <div class="poi marker" style="left: 1561px;top: 1068px;">
+                    <img class="markDot" src="MarkerSmdL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Capim-les-Champs" class="tooltiptext descale superColor">Capim-les-Champs</a>
+                </div>
+                <div class="poi marker" style="left: 1625px;top: 907px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Spirale_Marine" class="tooltiptext descale superColor">Spirale Marine</a>
+                </div>
+                <div class="poi marker" style="left: 1841px;top: 900px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Jungle_Myst%C3%A8re_(Donjon_Myst%C3%A8re_4)" class="tooltiptext descale superColor">Jungle Mystère</a>
+                </div>
+                <div class="poi marker" style="left: 1817px;top: 1167px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Lac_du_C%C5%93ur" class="tooltiptext descale superColor">Lac du Coeur</a>
+                </div>
+                <div class="poi marker" style="left: 1296px;top: 952px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Cach%C3%A9e" class="tooltiptext descale superColor">Grotte Cachée</a>
+                </div>
+                <div class="poi marker" style="left: 1645px;top: 961px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Colline_Ensoleill%C3%A9e" class="tooltiptext descale superColor">Colline Ensoleillée</a>
+                </div>
+                <div class="poi marker" style="left: 1719px;top: 1059px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plaine_des_Copains" class="tooltiptext descale superColor">Plaine des Copains</a>
+                </div>
+                <div class="poi marker" style="left: 1577px;top: 1150px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Col_de_l%27Abondance" class="tooltiptext descale superColor">Col de l'Abondance</a>
+                </div>
+                <div class="poi marker" style="left: 1495px;top: 994px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plaine_des_M%C3%A9galithes" class="tooltiptext descale superColor">Plaine des Mégalithes</a>
+                </div>
+                <div class="poi marker" style="left: 1862px;top: 817px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Point_Bleu" class="tooltiptext descale superColor">Point Bleu</a>
+                </div>
+                <div class="poi marker" style="left: 1821px;top: 1004px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Temple_Triangulaire" class="tooltiptext descale superColor">Temple Triangulaire</a>
+                </div>
+                <div class="poi marker" style="left: 1558px;top: 1379px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ruines_Sacr%C3%A9es" class="tooltiptext descale superColor">Ruines Sacrées</a>
+                </div>
+                <div class="poi marker" style="left: 1605px;top: 1420px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ruines_C%C3%A9lestes" class="tooltiptext descale superColor">Ruines Célestes</a>
+                </div>
+                <div class="poi marker" style="left: 1662px;top: 1394px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Portail_des_Dragons" class="tooltiptext descale superColor">Portail des Dragons</a>
+                </div>
+                <div class="poi marker" style="left: 1911px;top: 1079px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Pic_Terminal" class="tooltiptext descale superColor">Pic Terminal</a>
+                </div>
+                <div class="poi marker" style="left: 1269px;top: 930px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Souterrain_Volcanique" class="tooltiptext descale superColor">Souterrain Volcanique</a>
+                </div>
+				<div class="poi marker" style="left: 1878px;top: 950px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Rivage_de_la_Libert%C3%A9" class="tooltiptext descale superColor">Rivage de la Liberté</a>
+                </div>
+				<div class="poi marker" style="left: 1688px;top: 856px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_du_Silence" class="tooltiptext descale superColor">Caverne du Silence</a>
+                </div>
+				<div class="poi marker" style="left: 1725px;top: 1109px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Voie_des_Feuilles_Mortes" class="tooltiptext descale superColor">Voie des Feuilles Mortes</a>
+                </div>
+                <div class="poi marker" style="left: 1839px;top: 1340px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Labyrinthe_Cristallin" class="tooltiptext descale superColor">Labyrinthe Cristallin</a>
+                </div>
+                <div class="poi marker" style="left: 1292px;top: 1008px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Tunnel_Oc%C3%A9anique" class="tooltiptext descale superColor">Tunnel Océanique</a>
+                </div>
+                <div class="poi marker" style="left: 1737px;top: 1010px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Champ_des_Bourgeons" class="tooltiptext descale superColor">Champ des Bourgeons</a>
+                </div>
+                <div class="poi marker" style="left: 1680px;top: 1277px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mini-Canyon" class="tooltiptext descale superColor">Mini-Canyon</a>
+                </div>
+                <div class="poi marker" style="left: 1492px;top: 940px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Sentier_des_Ronces" class="tooltiptext descale superColor">Sentier des Ronces</a>
+                </div>
+                
+                
+                <!--Mist Continent-->
+                <div class="poi marker" style="left: 394px;top: 571px;">
+                    <img class="markDot" src="MarkerSmdL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/No%C3%A9-la-Brume" class="tooltiptext descale superColor">Noé-la-Brume</a>
+                </div>
+                <div class="poi marker" style="left: 566px;top: 859px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Cap_Merveilleux" class="tooltiptext descale superColor">Cap Merveilleux</a>
+                </div>
+                <div class="poi marker" style="left: 556px;top: 277px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Val_du_Soleil_de_Minuit" class="tooltiptext descale superColor">Val du Soleil de Minuit</a>
+                </div>
+                <div class="poi marker" style="left: 273px;top: 653px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_des_F%C3%A9es" class="tooltiptext descale superColor">Forêt des Fées</a>
+                </div>
+                <div class="poi marker" style="left: 209px;top: 581px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Rocailleuse" class="tooltiptext descale superColor">Grotte Rocailleuse</a>
+                </div>
+                <div class="poi marker" style="left: 189px;top: 484px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_de_l%27Exil" class="tooltiptext descale superColor">Île de l'Exil</a>
+                </div>
+                <div class="poi marker" style="left: 269px;top: 721px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ruines_Souterraines" class="tooltiptext descale superColor">Ruines Souterraines</a>
+                </div>
+				<div class="poi marker" style="left: 161px;top: 365px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Marais_Baveux" class="tooltiptext descale superColor">Marais Baveux</a>
+                </div>
+				<div class="poi marker" style="left: 424px;top: 346px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Chutes_de_Glace" class="tooltiptext descale superColor">Chutes de Glace</a>
+                </div>
+				<div class="poi marker" style="left: 577px;top: 406px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Lac_de_l%27Illumination" class="tooltiptext descale superColor">Lac de l'Illumination</a>
+                </div>
+                <div class="poi marker" style="left: 383px;top: 103px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Confins_de_l%27Aurore" class="tooltiptext descale superColor">Confins de l'Aurore</a>
+                </div>
+                <div class="poi marker" style="left: 157px;top: 178px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Lac_Cristallin_(Donjon_Myst%C3%A8re_4)" class="tooltiptext descale superColor">Lac Cristallin</a>
+                </div>
+                <div class="poi marker" style="left: 259px;top: 121px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Montagne_Gel%C3%A9e" class="tooltiptext descale superColor">Montagne Gelée</a>
+                </div>
+                <div class="poi marker" style="left: 77px;top: 303px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Crat%C3%A8re_du_M%C3%A9t%C3%A9ore" class="tooltiptext descale superColor">Cratère du Météore</a>
+                </div>
+                <div class="poi marker" style="left: 418px;top: 778px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Pitrouille" class="tooltiptext descale superColor">Forêt Pitrouille</a>
+                </div>
+                
+                
+                <!--Sand Continent-->
+                <div class="poi marker" style="left: 319px;top: 1248px;">
+                    <img class="markDot" src="MarkerSmdL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ramal-les-Sables" class="tooltiptext descale superColor">Ramal-les-Sables</a>
+                </div>
+                
+                <div class="poi marker" style="left: 121px;top: 1239px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/D%C3%A9dale_du_Sable_Jaune" class="tooltiptext descale superColor">Dédale du Sable Jaune</a>
+                </div>
+                <div class="poi marker" style="left: 201px;top: 1314px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Prairie_Dess%C3%A9ch%C3%A9e" class="tooltiptext descale superColor">Prairie Desséchée</a>
+                </div>
+                <div class="poi marker" style="left: 174px;top: 1135px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Reg_des_Esprits" class="tooltiptext descale superColor">Reg des Esprits</a>
+                </div>
+                <div class="poi marker" style="left: 135px;top: 1379px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Galerie_Magique" class="tooltiptext descale superColor">Galerie Magique</a>
+                </div>
+                <div class="poi marker" style="left: 135px;top: 1137px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Ensabl%C3%A9e" class="tooltiptext descale superColor">Grotte Ensablée</a>
+                </div>
+                <div class="poi marker" style="left: 328px;top: 1380px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/G%C3%A9oglyphes_%C3%89nigmatiques" class="tooltiptext descale superColor">Géoglyphes Enigmatiques</a>
+                </div>
+                <div class="poi marker" style="left: 194px;top: 1167px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/D%C3%A9sert_Sablier" class="tooltiptext descale superColor">Désert Sablier</a>
+                </div>
+                <div class="poi marker" style="left: 161px;top: 1193px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Col_Final" class="tooltiptext descale superColor">Col Final</a>
+                </div>
+				<div class="poi marker" style="left: 442px;top: 1114px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_de_Lumi%C3%A8re" class="tooltiptext descale superColor">Île de Lumière</a>
+                </div>
+				<div class="poi marker" style="left: 283px;top: 1291px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mine_Secr%C3%A8te" class="tooltiptext descale superColor">Mine Secrète</a>
+                </div>
+				<div class="poi marker" style="left: 349px;top: 1295px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Antichambre_Dor%C3%A9e" class="tooltiptext descale superColor">Antichambre Dorée</a>
+                </div>
+				<div class="poi marker" style="left: 130px;top: 1340px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_Enneig%C3%A9e" class="tooltiptext descale superColor">Caverne Enneigée</a>
+                </div>
+                <div class="poi marker" style="left: 98px;top: 1315px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ville_des_Fossiles" class="tooltiptext descale superColor">Ville des Fossiles</a>
+                </div>
+                <div class="poi marker" style="left: 269px;top: 1211px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Prairie_des_Terriers" class="tooltiptext descale superColor">Prairie des Terriers</a>
+                </div>
+                <div class="poi marker" style="left: 120px;top: 1285px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Route_des_Joyaux" class="tooltiptext descale superColor">Route des Joyaux</a>
+                </div>
+                <div class="poi marker" style="left: 153px;top: 1105px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Col_de_la_For%C3%AAt_P%C3%A9trifi%C3%A9e" class="tooltiptext descale superColor">Col de la Forêt Pétrifiée</a>
+                </div>
+
+
+                <!--Misc-->
+                <div class="poi marker" style="left: 701px;top: 1208px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Arbre_de_Vie" class="tooltiptext descale superColor">Arbre de Vie</a>
+                </div>
+                <div class="poi marker" style="left: 744px;top: 1048px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Volcan_de_l%27%C3%8Ele_de_Feu" class="tooltiptext descale superColor">Volcan de l'Île de Feu</a>
+                </div>
+                <div class="poi marker" style="left: 1218px;top: 1216px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ruines_des_Abysses_(Donjon_Myst%C3%A8re_4)" class="tooltiptext descale superColor">Ruines des Abysses</a>
+                </div>
+                <div class="poi marker" style="left: 1220px;top: 1429px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Autel_de_Glace" class="tooltiptext descale superColor">Autel de Glace</a>
+                </div>
+                <div class="poi marker"  style="left: 1131px;top: 1013px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Oc%C3%A9an_Tumultueux" class="tooltiptext descale superColor">Océan Tumulteux</a>
+                </div>
+                <div class="poi marker" style="left: 1156px;top: 861px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Sanctuaire_Marin" class="tooltiptext descale superColor">Sanctuaire Marin</a>
+                </div>
+                <div class="poi marker" style="left: 945px;top: 850px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_des_Orages" class="tooltiptext descale superColor">Île des Orages</a>
+                </div>
+                <div class="poi marker" style="left: 748px;top: 1353px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Pont_de_l%27Arc-en-Ciel" class="tooltiptext descale superColor">Pont de l'Arc-en-ciel</a>
+                </div>
+                
+                <div class="poi marker" style="left: 794px;top: 192px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Tour_du_Destin_(Donjon_Myst%C3%A8re_4)" class="tooltiptext descale superColor">Tour du Destin</a>
+                </div>
+                <div class="poi marker" style="left: 766px;top: 224px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ruines_du_Passage" class="tooltiptext descale superColor">Ruines du Passage</a>
+                </div>
+                <div class="poi marker" style="left: 847px;top: 231px;">
+                    <img class="markDot" src="MarkerSmd.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Lac_des_Lueurs_%C3%89tranges" class="tooltiptext descale superColor">Lac des Lueurs Etranges</a>
+                </div>
+            </div>
+
+            <div class="container_icon" id="markers_rescue">
+                <div class="poi marker" style="left: 1474px;top: 462px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Place_Pok%C3%A9mon" class="tooltiptext descale rescueColor">Place Pokémon</a>
+                </div>
+                <div class="poi marker" style="left: 1457px;top: 455px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Apaisement" class="tooltiptext descale rescueColor">Forêt Apaisement</a>
+                </div>
+                <div class="poi marker" style="left: 1465px;top: 520px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Temple_Ancien_AN" class="tooltiptext descale rescueColor">Temple Ancien</a>
+                </div>
+                <div class="poi marker" style="left: 1525px;top: 520px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Magn%C3%A9tique" class="tooltiptext descale rescueColor">Grotte Magnétique</a>
+                </div>
+                <div class="poi marker" style="left: 1490px;top: 555px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plaines_Sauvages" class="tooltiptext descale rescueColor">Plaines Sauvages</a>
+                </div>
+                <div class="poi marker" style="left: 1525px;top: 555px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/D%C3%A9sert_Fournaise" class="tooltiptext descale rescueColor">Désert Fournaise</a>
+                </div>
+                <div class="poi marker" style="left: 1485px;top: 435px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Terres_Sacr%C3%A9es" class="tooltiptext descale rescueColor">Terres Sacrées</a>
+                </div>
+                <div class="poi marker" style="left: 1510px;top: 430px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_de_l%27Essor" class="tooltiptext descale rescueColor">Forêt de l'Essor</a>
+                </div>
+                <div class="poi marker" style="left: 1485px;top: 410px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Col_T%C3%A9n%C3%A9breux" class="tooltiptext descale rescueColor">Col Ténèbreux</a>
+                </div>
+                <div class="poi marker" style="left: 1490px;top: 395px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Marais_Roseaux" class="tooltiptext descale rescueColor">Marais Roseaux</a>
+                </div>
+                <div class="poi marker" style="left: 1450px;top: 490px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plaines_Br%C3%BBl%C3%A9es" class="tooltiptext descale rescueColor">Plaines Brûlées</a>
+                </div>
+                <div class="poi marker" style="left: 1445px;top: 430px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mare_Carapace" class="tooltiptext descale rescueColor">Mare Carapace</a>
+                </div>
+                <div class="poi marker" style="left: 1430px;top: 410px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_L%C3%A9gendaire" class="tooltiptext descale rescueColor">Île Légendaire</a>
+                </div>
+                <div class="poi marker" style="left: 1450px;top: 415px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_%C3%89chos" class="tooltiptext descale rescueColor">Grotte Echos</a>
+                </div>
+                <div class="poi marker" style="left: 1465px;top: 380px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Lac_Mystique" class="tooltiptext descale rescueColor">Lac Mystique</a>
+                </div>
+                <div class="poi marker" style="left: 1405px;top: 385px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mer_S%C3%A9r%C3%A9nit%C3%A9" class="tooltiptext descale rescueColor">Mer Sérénité</a>
+                </div>
+                <div class="poi marker" style="left: 1495px;top: 365px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_de_Glace" class="tooltiptext descale rescueColor">Caverne de Glace</a>
+                </div>
+                <div class="poi marker" style="left: 1495px;top: 450px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Rivi%C3%A8re_Glouglou" class="tooltiptext descale rescueColor">Rivière Glouglou</a>
+                </div>
+                <div class="poi marker" style="left: 1510px;top: 460px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Lac_Cascade" class="tooltiptext descale rescueColor">Lac Cascade</a>
+                </div>
+                <div class="poi marker" style="left: 1495px;top: 475px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mare_aux_T%C3%AAtards" class="tooltiptext descale rescueColor">Mare aux Têtards</a>
+                </div>
+                <div class="poi marker" style="left: 1385px;top: 525px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_M%C3%A9ridionale" class="tooltiptext descale rescueColor">Île Méridionale</a>
+                </div>
+                <div class="poi marker" style="left: 1420px;top: 515px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mer_aux_Tr%C3%A9sors" class="tooltiptext descale rescueColor">Mer aux Trésors</a>
+                </div>
+                <div class="poi marker" style="left: 1355px;top: 445px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_de_la_Fin" class="tooltiptext descale rescueColor">Île de la Fin</a>
+                </div>
+                <div class="poi marker" style="left: 1350px;top: 490px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_Enclav%C3%A9e" class="tooltiptext descale rescueColor">Île Enclavée</a>
+                </div>
+                <div class="poi marker" style="left: 1385px;top: 420px;">
+                    <img class="markDot" ontouchend="touchVis(this,event);" src="MarkerRtL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plage_Sablefin" class="tooltiptext descale rescueColor">Plage Sablefin</a>
+                </div>
+                <div class="poi marker" style="left: 1458px;top: 439px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Petit_Bois" class="tooltiptext descale rescueColor">Petit Bois</a>
+                </div>
+                <div class="poi marker" style="left: 1526px;top: 450px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Bois_Sinistre" class="tooltiptext descale rescueColor">Bois Sinistre</a>
+                </div>
+                <div class="poi marker" style="left: 1546px;top: 689px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_Vestige" class="tooltiptext descale rescueColor">île Vestige</a>
+                </div>
+                <div class="poi marker" style="left: 1560px;top: 635px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ruines_Zarbi" class="tooltiptext descale rescueColor">Ruines Zarbi</a>
+                </div>
+                <div class="poi marker" style="left: 1416px;top: 681px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_Australe" class="tooltiptext descale rescueColor">Caverne Australe</a>
+                </div>
+                <div class="poi marker" style="left: 1684px;top: 491px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Bassin_Cascade" class="tooltiptext descale rescueColor">Bassin Cascade</a>
+                </div>
+                <div class="poi marker" style="left: 1762px;top: 597px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ruines_Obscures" class="tooltiptext descale rescueColor">Ruines Obscures</a>
+                </div>
+                <div class="poi marker" style="left: 1813px;top: 546px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ruines_Enfouies_(Donjon_Myst%C3%A8re)" class="tooltiptext descale rescueColor">Ruines Enfouies</a>
+                </div>
+                <div class="poi marker" style="left: 1846px;top: 560px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Colline_Dragon" class="tooltiptext descale rescueColor">Colline Dragon</a>
+                </div>
+                <div class="poi marker" style="left: 1825px;top: 464px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_du_Soleil" class="tooltiptext descale rescueColor">Grotte du Soleil</a>
+                </div>
+                <div class="poi marker" style="left: 1250px;top: 554px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Ouest" class="tooltiptext descale rescueColor">Grotte Ouest</a>
+                </div>
+                <div class="poi marker" style="left: 1382px;top: 395px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Fosse_d%27Argent" class="tooltiptext descale rescueColor">Fosse d'Argent</a>
+                </div>
+                <div class="poi marker" style="left: 1182px;top: 364px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Terres_de_Foudre" class="tooltiptext descale rescueColor">Terres de Foudre</a>
+                </div>
+                <div class="poi marker" style="left: 1251px;top: 338px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Terres_de_Feu" class="tooltiptext descale rescueColor">Terres de Feu</a>
+                </div>
+                <div class="poi marker" style="left: 1274px;top: 251px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Terres_Blizzard" class="tooltiptext descale rescueColor">Terres Blizzard</a>
+                </div>
+                <div class="poi marker" style="left: 1168px;top: 195px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Pic_Inaccessible" class="tooltiptext descale rescueColor">Pic Inaccessible</a>
+                </div>
+                <div class="poi marker" style="left: 1466px;top: 626px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grand_Ravin" class="tooltiptext descale rescueColor">Grand Ravin</a>
+                </div>
+                <div class="poi marker" style="left: 1472px;top: 570px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_P%C3%A9rils" class="tooltiptext descale rescueColor">Grotte Périls</a>
+                </div>
+                <div class="poi marker" style="left: 1510px;top: 565px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Erg_Sans_Fin" class="tooltiptext descale rescueColor">Erg Sans Fin</a>
+                </div>
+                <div class="poi marker" style="left: 1565px;top: 518px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_T%C3%A9n%C3%A8bres" class="tooltiptext descale rescueColor">Grotte ténèbres</a>
+                </div>
+                <div class="poi marker" style="left: 1678px;top: 576px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Eaux_Merveilleuses" class="tooltiptext descale rescueColor">Eaux Merveilleuses</a>
+                </div>
+                <div class="poi marker" style="left: 1423px;top: 329px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_%C3%89clair" class="tooltiptext descale rescueColor">Grotte Eclair</a>
+                </div>
+                <div class="poi marker" style="left: 1454px;top: 322px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Bois_Hurlement" class="tooltiptext descale rescueColor">Bois Hurlement</a>
+                </div>
+                <div class="poi marker" style="left: 1501px;top: 335px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mont_Acier" class="tooltiptext descale rescueColor">Mont Acier</a>
+                </div>
+                <div class="poi marker" style="left: 1751px;top: 352px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Lapis" class="tooltiptext descale rescueColor">Grotte Lapis</a>
+                </div>
+                <div class="poi marker" style="left: 1288px;top: 708px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Puret%C3%A9" class="tooltiptext descale rescueColor">Forêt Pureté</a>
+                </div>
+                <div class="poi marker" style="left: 1298px;top: 736px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Tour_Bonheur" class="tooltiptext descale rescueColor">Tour Bonheur</a>
+                </div>
+                <div class="poi marker" style="left: 1237px;top: 730px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_des_V%C5%93ux" class="tooltiptext descale rescueColor">Grotte des Voeux</a>
+                </div>
+                <div class="poi marker" style="left: 1302px;top: 465px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Haute_Mer" class="tooltiptext descale rescueColor">Haute Mer</a>
+                </div>
+                <div class="poi marker" style="left: 1372px;top: 617px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mer_Houleuse" class="tooltiptext descale rescueColor">Mer Houleuse</a>
+                </div>
+                <div class="poi marker" style="left: 1329px;top: 304px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Canal_Fantaisie" class="tooltiptext descale rescueColor">Canal Fantaisie</a>
+                </div>
+                <div class="poi marker" style="left: 1524px;top: 371px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Val_Silencieux" class="tooltiptext descale rescueColor">Val Silencieux</a>
+                </div>
+                <div class="poi marker" style="left: 1591px;top: 378px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mont_Foudre" class="tooltiptext descale rescueColor">Mont Foudre</a>
+                </div>
+                <div class="poi marker" style="left: 1545px;top: 318px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Bois_Brouhaha" class="tooltiptext descale rescueColor">Bois Brouhaha</a>
+                </div>
+                <div class="poi marker" style="left: 1454px;top: 240px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Vall%C3%A9e_Infernale" class="tooltiptext descale rescueColor">Vallée Infernale</a>
+                </div>
+                <div class="poi marker" style="left: 1402px;top: 214px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Monts_Septentrion" class="tooltiptext descale rescueColor">Monts Septentrion</a>
+                </div>
+                <div class="poi marker" style="left: 1541px;top: 128px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mer_des_Confins" class="tooltiptext descale rescueColor">Mer des Confins</a>
+                </div>
+                <div class="poi marker" style="left: 1725px;top: 80px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Tour_C%C3%A9leste" class="tooltiptext descale rescueColor">Tour Céleste</a>
+                </div>
+                <div class="poi marker" style="left: 1863px;top: 129px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mont_Glacial" class="tooltiptext descale rescueColor">Mont Glacial</a>
+                </div>
+                <div class="poi marker" style="left: 1834px;top: 179px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Givr%C3%A9e" class="tooltiptext descale rescueColor">Forêt Givrée</a>
+                </div>
+                <div class="poi marker" style="left: 1912px;top: 213px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mine_Magma" class="tooltiptext descale rescueColor">Mine Magma</a>
+                </div>
+                <div class="poi marker" style="left: 1694px;top: 288px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_M%C3%A9t%C3%A9ore" class="tooltiptext descale rescueColor">Grotte Météore</a>
+                </div>
+                <div class="poi marker" style="left: 1785px;top: 235px;">
+                    <img class="markDot" src="MarkerRt.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mont_Ardent_(Donjon_Myst%C3%A8re)" class="tooltiptext descale rescueColor">Mont Ardent</a>
+                </div>
+            </div>
+
+            <div class="container_icon" id="markers_explorers">
+                <div class="poi marker" style="left: 1520px;top: 1120px;">
+                    <img class="markDot" src="MarkerExpL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Bourg-Tr%C3%A9sor" class="tooltiptext descale explorersColor">Bourg-Trésor</a>
+                </div>
+                <div class="poi marker" style="left: 1514px;top: 1156px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Littorale_(Donjon_Myst%C3%A8re)" class="tooltiptext descale explorersColor">Grotte Littorale</a>
+                </div>
+                <div class="poi marker" style="left: 1597px;top: 1075px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Cascade_(Donjon_Myst%C3%A8re_2)" class="tooltiptext descale explorersColor">Grotte Cascade</a>
+                </div>
+                <div class="poi marker" style="left: 1492px;top: 1076px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_Saline" class="tooltiptext descale explorersColor">Cavrne Saline</a>
+                </div>
+                
+                <div class="poi marker" style="left: 1523px;top: 1222px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_Z%C3%A9ro_Nord" class="tooltiptext descale explorersColor">Île Zéro Nord</a>
+                </div>
+                <div class="poi marker" style="left: 1549px;top: 1245px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_Z%C3%A9ro_Est" class="tooltiptext descale explorersColor">Île Zéro Est</a>
+                </div>
+                <div class="poi marker" style="left: 1520px;top: 1274px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_Z%C3%A9ro_Sud" class="tooltiptext descale explorersColor">Île Zéro Sud</a>
+                </div>
+                <div class="poi marker" style="left: 1491px;top: 1244px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_Z%C3%A9ro_Ouest" class="tooltiptext descale explorersColor">Île Zéro Ouest</a>
+                </div>
+                <div class="poi marker" style="left: 1188px;top: 1407px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ile_Blizzard" class="tooltiptext descale explorersColor">Île Blizzard</a>
+                </div>
+                <div class="poi marker" style="left: 1209px;top: 1434px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_L%C3%A9zarde" class="tooltiptext descale explorersColor">Grotte Lézarde</a>
+                </div>
+                <div class="poi marker" style="left: 1423px;top: 1403px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mer_Ferm%C3%A9e" class="tooltiptext descale explorersColor">Mer Fermée</a>
+                </div>
+                <div class="poi marker" style="left: 1572px;top: 1007px;">
+                    <img class="markDot" src="MarkerExpL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Source_Lumineuse" class="tooltiptext descale explorersColor">Source Lumineuse</a>
+                </div>
+                <div class="poi marker" style="left: 1581px;top: 1022px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Trompeuse" class="tooltiptext descale explorersColor">Forêt Trompeuse</a>
+                </div>
+                <div class="poi marker" style="left: 1615px;top: 1158px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/C%C3%B4te_Escarp%C3%A9e" class="tooltiptext descale explorersColor">Côte Escarpée</a>
+                </div>
+                <div class="poi marker" style="left: 1592px;top: 981px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plaines_Elek" class="tooltiptext descale explorersColor">Plaines Elek</a>
+                </div>
+                <div class="poi marker" style="left: 1692px;top: 1242px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Egide" class="tooltiptext descale explorersColor">Grotte Egide</a>
+                </div>
+                <div class="poi marker" style="left: 1771px;top: 1157px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Brumeuse" class="tooltiptext descale explorersColor">Forêt Brumeuse</a>
+                </div>
+                <div class="poi marker" style="left: 1805px;top: 1182px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Etuve" class="tooltiptext descale explorersColor">Grotte Etuve</a>
+                </div>
+                <div class="poi marker" style="left: 1843px;top: 1002px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mt_Labeur" class="tooltiptext descale explorersColor">Mont Labeur</a>
+                </div>
+                <div class="poi marker" style="left: 1850px;top: 935px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Glauque" class="tooltiptext descale explorersColor">Forêt Glauque</a>
+                </div>
+                <div class="poi marker" style="left: 1865px;top: 938px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_de_l%27Est" class="tooltiptext descale explorersColor">Caverne de L'est</a>
+                </div>
+                <div class="poi marker" style="left: 1880px;top: 925px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ravin_Aubaine" class="tooltiptext descale explorersColor">Ravin Aubaine</a>
+                </div>
+                <div class="poi marker" style="left: 1905px;top: 983px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Colline_Chatoyante" class="tooltiptext descale explorersColor">Colline Chatoyante</a>
+                </div>
+                <div class="poi marker" style="left: 1910px;top: 1055px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Faille_Spatiale" class="tooltiptext descale explorersColor">Faille Spatiale</a>
+                </div>
+                <div class="poi marker" style="left: 1272px;top: 905px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Crat%C3%A8re_Obscur" class="tooltiptext descale explorersColor">Cratère Obscur</a>
+                </div>
+                <div class="poi marker" style="left: 1239px;top: 1423px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mt_Avalanche" class="tooltiptext descale explorersColor">Mont Avalanche</a>
+                </div>
+                <div class="poi marker" style="left: 1354px;top: 1229px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Terres_Illusoires" class="tooltiptext descale explorersColor">Terres Illusoires</a>
+                </div>
+                <div class="poi marker" style="left: 1317px;top: 1167px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Tour_du_Temps" class="tooltiptext descale explorersColor">Tour du Temps</a>
+                </div>
+                <div class="poi marker" style="left: 1305px;top: 1039px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mer_Prodige" class="tooltiptext descale explorersColor">Mer Prodige</a>
+                </div>
+                <div class="poi marker" style="left: 1251px;top: 982px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mt_Mistral" class="tooltiptext descale explorersColor">Mont Mistral</a>
+                </div>
+                <div class="poi marker" style="left: 1316px;top: 952px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Volcan_G%C3%A9ant" class="tooltiptext descale explorersColor">Volcan Géant</a>
+                </div>
+                <div class="poi marker" style="left: 1357px;top: 906px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_Brasier" class="tooltiptext descale explorersColor">Caverne Brasier</a>
+                </div>
+                <div class="poi marker" style="left: 1445px;top: 1181px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mer_Sans_Fond" class="tooltiptext descale explorersColor">Mer Sans Fond</a>
+                </div>
+                <div class="poi marker" style="left: 1565px;top: 1093px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Rivi%C3%A8re_S%C3%A9r%C3%A9nit%C3%A9" class="tooltiptext descale explorersColor">Rivière Sérénité</a>
+                </div>
+                <div class="poi marker" style="left: 1819px;top: 1220px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Contr%C3%A9e_Inexplor%C3%A9e" class="tooltiptext descale explorersColor">Contrée Inexplorée</a>
+                </div>
+                <div class="poi marker" style="left: 1837px;top: 1325px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Eles_du_Sud-Est" class="tooltiptext descale explorersColor">Îles du Sud-Est</a>
+                </div>
+                <div class="poi marker" style="left: 1754px;top: 1170px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_de_l%27Oubli" class="tooltiptext descale explorersColor">Forêt de l'Oubli</a>
+                </div>
+                <div class="poi marker" style="left: 1944px;top: 844px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Cap_Enchanteur" class="tooltiptext descale explorersColor">Cap Enchanteur</a>
+                </div>
+                <div class="poi marker" style="left: 1550px;top: 1167px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Falaise_Tremp%C3%A9e" class="tooltiptext descale explorersColor">Falaise Trempée</a>
+                </div>
+                <div class="poi marker" style="left: 1508px;top: 1010px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Sables_Mouvants" class="tooltiptext descale explorersColor">Grotte Sables Mouvants</a>
+                </div>
+                <div class="poi marker" style="left: 1542px;top: 995px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/D%C3%A9sert_du_Nord" class="tooltiptext descale explorersColor">Désert du Nord</a>
+                </div>
+                <div class="poi marker" style="left: 1491px;top: 920px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/D%C3%A9sert_Chatoyant" class="tooltiptext descale explorersColor">Désert Chatoyant</a>
+                </div>
+                <div class="poi marker" style="left: 1674px;top: 943px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_Cristal" class="tooltiptext descale explorersColor">Caverne Cristal</a>
+                </div>
+                <div class="poi marker" style="left: 1671px;top: 881px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Croisement_Cristal" class="tooltiptext descale explorersColor">Croisement Cristal</a>
+                </div>
+                <div class="poi marker" style="left: 1412px;top: 1267px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Station_Marine" class="tooltiptext descale explorersColor">Station Marine</a>
+                </div>
+                <div class="poi marker" style="left: 1521px;top: 1246px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_Z%C3%A9ro_Centre" class="tooltiptext descale explorersColor">Île Zéro Centre</a>
+                </div>
+                <div class="poi marker" style="left: 1768px;top: 974px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Linceul" class="tooltiptext descale explorersColor">Forêt Linceul</a>
+                </div>
+                <div class="poi marker" style="left: 1573px;top: 1367px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Lac_Lointain" class="tooltiptext descale explorersColor">Lac Lointain</a>
+                </div>
+                <div class="poi marker" style="left: 1621px;top: 1361px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Minuit" class="tooltiptext descale explorersColor">Forêt Minuit</a>
+                </div>
+                <div class="poi marker" style="left: 1680px;top: 1350px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Abysse_du_Monde" class="tooltiptext descale explorersColor">Abysse du Monde</a>
+                </div>
+                <div class="poi marker" style="left: 1804px;top: 831px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Tour_du_Destin_(Donjon_Myst%C3%A8re_2)" class="tooltiptext descale explorersColor">Tour du Destin</a>
+                </div>
+                <div class="poi marker" style="left: 1733px;top: 1244px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ruines_Cach%C3%A9es" class="tooltiptext descale explorersColor">Ruines Cachées</a>
+                </div>
+                <div class="poi marker" style="left: 1733px;top: 1210px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Jungle_M%C3%A9ridionale" class="tooltiptext descale explorersColor">Jungle Méridionale</a>
+                </div>
+                <div class="poi marker" style="left: 1725px;top: 1185px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Carri%C3%A8re_Rocher" class="tooltiptext descale explorersColor">Carrière Rocher</a>
+                </div>
+                <div class="poi marker" style="left: 1738px;top: 1114px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mt_Corne" class="tooltiptext descale explorersColor">Mont Corne</a>
+                </div>
+                <div class="poi marker" style="left: 1579px;top: 1162px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Petit_Pr%C3%A9" class="tooltiptext descale explorersColor">Petit Pré</a>
+                </div>
+                <div class="poi marker" style="left: 1609px;top: 1101px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Prairie_Luxuriante" class="tooltiptext descale explorersColor">Prairie Lucuriante</a>
+                </div>
+                <div class="poi marker" style="left: 1760px;top: 1077px;">
+                    <img class="markDot" src="MarkerExpL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Village_Shaymin" class="tooltiptext descale explorersColor">Village Shaymin</a>
+                </div>
+                <div class="poi marker" style="left: 1760px;top: 1050px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Pic_C%C3%A9leste" class="tooltiptext descale explorersColor">Pic Céleste</a>
+                </div>
+                <div class="poi marker" style="left: 1509px;top: 864px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Escalier_C%C3%A9leste" class="tooltiptext descale explorersColor">Escalier Céleste</a>
+                </div>
+				<div class="poi marker" style="left: 1360px;top: 1293px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mer_Perfide" class="tooltiptext descale explorersColor">Mer Perfide</a>
+                </div>
+				<div class="poi marker" style="left: 1682px;top: 1120px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Eboulement" class="tooltiptext descale explorersColor">Grotte Eboulement</a>
+                </div>
+				<div class="poi marker" style="left: 1670px;top: 1137px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_Etoile" class="tooltiptext descale explorersColor">Caverne Etoile</a>
+                </div>
+				<div class="poi marker" style="left: 1693px;top: 1059px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Bois_aux_Pommes" class="tooltiptext descale explorersColor">Bois aux Pommes</a>
+                </div>
+				<div class="poi marker" style="left: 1651px;top: 1065px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Oran" class="tooltiptext descale explorersColor">Forêt Oran</a>
+                </div>
+				<div class="poi marker" style="left: 1660px;top: 1018px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mt_H%C3%A9riss%C3%A9" class="tooltiptext descale explorersColor">Mont Hérissé</a>
+                </div>
+				<div class="poi marker" style="left: 1743px;top: 1030px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Labyrinthe" class="tooltiptext descale explorersColor">Grotte Labyrinthe</a>
+                </div>
+				<div class="poi marker" style="left: 1624px;top: 1123px;">
+                    <img class="markDot" src="MarkerExpL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Source_Chaude" class="tooltiptext descale explorersColor">Source Chaude</a>
+                </div>
+                <div class="poi marker" style="left: 1610px;top: 1130px;">
+                    <img class="markDot" src="MarkerExp.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Caverne_Source" class="tooltiptext descale explorersColor">Caverne Source</a>
+                </div>
+            </div>
+
+            <div class="container_icon" id="markers_gates">
+                <div class="poi marker" style="left: 439px;top: 467px;">
+                    <img class="markDot" src="MarkerGtiL.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Village_Relais" class="tooltiptext descale gatesColor">Village Relais</a>
+                </div>
+                <div class="poi marker" style="left: 435px;top: 385px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Rive_du_Nordet" class="tooltiptext descale gatesColor">Rive du Nordet</a>
+                </div>
+                <div class="poi marker" style="left: 379px;top: 362px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Centre_du_Monde" class="tooltiptext descale gatesColor">Centre du Monde</a>
+                </div>
+                <div class="poi marker" style="left: 430px;top: 353px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grand_Glacier" class="tooltiptext descale gatesColor">Grand Glacier</a>
+                </div>
+                <div class="poi marker" style="left: 430px;top: 323px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Palais_de_Glace" class="tooltiptext descale gatesColor">Palais de Glace</a>
+                </div>
+                <div class="poi marker" style="left: 464px;top: 559px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/%C3%8Ele_Onirique" class="tooltiptext descale gatesColor">Île Onirique</a>
+                </div>
+                <div class="poi marker" style="left: 493px;top: 566px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Nuit_Noire" class="tooltiptext descale gatesColor">Forêt Nuit Noire</a>
+                </div>
+                <div class="poi marker" style="left: 469px;top: 307px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Cap_des_Confins" class="tooltiptext descale gatesColor">Cap des Confins</a>
+                </div>
+                <div class="poi marker" style="left: 576px;top: 530px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Canyon_Jaune" class="tooltiptext descale gatesColor">Canyon Jaune</a>
+                </div>
+                <div class="poi marker" style="left: 599px;top: 518px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Fond_du_Canyon" class="tooltiptext descale gatesColor">Fond du Canyon</a>
+                </div>
+                <div class="poi marker" style="left: 528px;top: 504px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Brousse_Aride" class="tooltiptext descale gatesColor">Brousse Aride</a>
+                </div>
+                <div class="poi marker" style="left: 559px;top: 561px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mont_du_Matin" class="tooltiptext descale gatesColor">Mont du Matin</a>
+                </div>
+                <div class="poi marker" style="left: 512px;top: 550px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/D%C3%A9tour_V%C3%A9suvien" class="tooltiptext descale gatesColor">Détour Vésuvien</a>
+                </div>
+                <div class="poi marker" style="left: 535px;top: 620px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plage_Moussaillon" class="tooltiptext descale gatesColor">Plage Moussaillon</a>
+                </div>
+                <div class="poi marker" style="left: 580px;top: 381px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Bois_Clair_de_Lune" class="tooltiptext descale gatesColor">Bois Clair de Lune</a>
+                </div>
+                <div class="poi marker" style="left: 313px;top: 499px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Val_de_la_Perdition" class="tooltiptext descale gatesColor">Val de la Perdition</a>
+                </div>
+                <div class="poi marker" style="left: 280px;top: 540px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mont_Bien_Cuit" class="tooltiptext descale gatesColor">Mont Bien Cuit</a>
+                </div>
+                <div class="poi marker" style="left: 358px;top: 471px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Col_du_Mirage" class="tooltiptext descale gatesColor">Col du Mirage</a>
+                </div>
+                <div class="poi marker" style="left: 390px;top: 485px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plaine_Pika" class="tooltiptext descale gatesColor">Plaine Pika</a>
+                </div>
+                <div class="poi marker" style="left: 366px;top: 443px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_de_Pierre" class="tooltiptext descale gatesColor">Grotte de Pierre</a>
+                </div>
+                <div class="poi marker" style="left: 337px;top: 354px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Bouche_de_l%27Enfer" class="tooltiptext descale gatesColor">Bouche de l'Enfer</a>
+                </div>
+                <div class="poi marker" style="left: 280px;top: 290px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Lande_Ultime" class="tooltiptext descale gatesColor">Lande Ultime</a>
+                </div>
+                <div class="poi marker" style="left: 408px;top: 537px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Bois_aux_Caves" class="tooltiptext descale gatesColor">Bois aux Caves</a>
+                </div>
+                <div class="poi marker" style="left: 449px;top: 509px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Sente_Montueuse" class="tooltiptext descale gatesColor">Sente Montueuse</a>
+                </div>
+                <div class="poi marker" style="left: 422px;top: 488px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mont_Bossel%C3%A9" class="tooltiptext descale gatesColor">Mont Bosselé</a>
+                </div>
+                <div class="poi marker" style="left: 581px;top: 475px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/D%C3%A9sert_Br%C3%BBlant" class="tooltiptext descale gatesColor">Désert Brûlant</a>
+                </div>
+                <div class="poi marker" style="left: 499px;top: 337px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Toundra_Paisible" class="tooltiptext descale gatesColor">Toundra Paisible</a>
+                </div>
+                <div class="poi marker" style="left: 573px;top: 446px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mont_Rouill%C3%A9" class="tooltiptext descale gatesColor">Mont Rouillé</a>
+                </div>
+                <div class="poi marker" style="left: 506px;top: 482px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Bosquet_Bruissant" class="tooltiptext descale gatesColor">Bosquet Bruissant</a>
+                </div>
+                <div class="poi marker" style="left: 535px;top: 475px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Roc_Quenotte" class="tooltiptext descale gatesColor">Roc Quenotte</a>
+                </div>
+                <div class="poi marker" style="left: 480px;top: 492px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Prairie_de_la_Brise" class="tooltiptext descale gatesColor">Prairie de la Brise</a>
+                </div>
+				<div class="poi marker" style="left: 611px;top: 487px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Monts_Troglodytes" class="tooltiptext descale gatesColor">Monts Troglodytes</a>
+                </div>
+				<div class="poi marker" style="left: 496px;top: 377px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Pilier_Gel%C3%A9" class="tooltiptext descale gatesColor">Pilier Gelé</a>
+                </div>
+				<div class="poi marker" style="left: 525px;top: 365px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Puits_de_Glace" class="tooltiptext descale gatesColor">Puits de Glace</a>
+                </div>
+				<div class="poi marker" style="left: 563px;top: 327px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mont_des_Grandes_Fum%C3%A9es" class="tooltiptext descale gatesColor">Mont des Grandes Fumées</a>
+                </div>
+				<div class="poi marker" style="left: 534px;top: 296px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Terre_sans_Retour" class="tooltiptext descale gatesColor">Terre Sans Retour</a>
+                </div>
+				<div class="poi marker" style="left: 412px;top: 411px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Vall%C3%A9e_D%C3%A9vast%C3%A9e" class="tooltiptext descale gatesColor">Vallée Dévastée</a>
+                </div>
+                <div class="poi marker" style="left: 370px;top: 395px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Parc_du_Lierre" class="tooltiptext descale gatesColor">Parc du Lierre</a>
+                </div>
+				<div class="poi marker" style="left: 438px;top: 437px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Bigarr%C3%A9e" class="tooltiptext descale gatesColor">Forêt Bigarrée</a>
+                </div>
+				<div class="poi marker" style="left: 479px;top: 433px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Mont_Toc_Toc" class="tooltiptext descale gatesColor">Mont Toc Toc</a>
+                </div>
+                <div class="poi marker" style="left: 50px;top: 260px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Chemin_Supr%C3%AAme" class="tooltiptext descale gatesColor">Chemin Suprême</a>
+                </div>
+                <div class="poi marker" style="left: 500px;top: 450px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Route_aux_Douceurs" class="tooltiptext descale gatesColor">Route aux Douceurs</a>
+                </div>
+				<div class="poi marker" style="left: 530px;top: 433px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Savane_de_l%27Est" class="tooltiptext descale gatesColor">Savane de l'Est</a>
+                </div>
+				<div class="poi marker" style="left: 467px;top: 409px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Vall%C3%A9e_des_Larmes" class="tooltiptext descale gatesColor">Vallée des Larmes</a>
+                </div>
+				<div class="poi marker" style="left: 340px;top: 442px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Plaine_Ocre" class="tooltiptext descale gatesColor">Plaine Ocre</a>
+                </div>
+				<div class="poi marker" style="left: 329px;top: 383px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Dune_des_Illusions" class="tooltiptext descale gatesColor">Dune des Illusions</a>
+                </div>
+                <div class="poi marker" style="left: 280px;top: 420px;">
+                    <img class="markDot" src="MarkerGti.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Pok%C3%A9" class="tooltiptext descale gatesColor">Forêt Poké</a>
+                </div>
+            </div>
+
+            <div class="container_icon" id="markers_other">
+                <div class="poi marker" style="left: 1341px;top: 1224px;">
+                    <img class="markDot" src="MarkerEtc.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Ruine_Scell%C3%A9e" class="tooltiptext descale">Ruine Scellée<br>(Futur)</a>
+                </div>
+                <div class="poi marker" style="left: 1330px;top: 1214px;">
+                    <img class="markDot" src="MarkerEtc.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Colline_Sombre" class="tooltiptext descale">Colline Sombre<br>(Futur)</a>
+                </div>
+                <div class="poi marker" style="left: 1327px;top: 1196px;">
+                    <img class="markDot" src="MarkerEtc.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Grotte_Ab%C3%AEme" class="tooltiptext descale">Grotte Abîme<br>(Futur)</a>
+                </div>
+                <div class="poi marker" style="left: 1366px;top: 1222px;">
+                    <img class="markDot" src="MarkerEtc.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Falaises_Spatiales" class="tooltiptext descale">Falaises Spatiales<br>(Futur)</a>
+                </div>
+                <div class="poi marker" style="left: 1362px;top: 1206px;">
+                    <img class="markDot" src="MarkerEtc.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Cr%C3%A9puscule" class="tooltiptext descale">Forêt Crépuscule<br>(Futur)</a>
+                </div>
+                <div class="poi marker" style="left: 1366px;top: 1185px;">
+                    <img class="markDot" src="MarkerEtc.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/C%C5%93ur_For%C3%AAt_Cr%C3%A9puscule" class="tooltiptext descale">Coeur Forêt Crépuscule<br>(Futur)</a>
+                </div>
+                <div class="poi marker" style="left: 1344px;top: 1184px;">
+                    <img class="markDot" src="MarkerEtc.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/D%C3%A9sert_Noir" class="tooltiptext descale">Désert Noir<br>(Futur)</a>
+                </div>
+                <div class="poi marker" style="left: 1344px;top: 1201px;">
+                    <img class="markDot" src="MarkerEtc.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Vall%C3%A9e_St%C3%A9rile" class="tooltiptext descale">Vallée Stérile<br>(Futur)</a>
+                </div>
+                
+                <div class="poi marker" style="left: 1223px;top: 1415px;">
+                    <img class="markDot" src="MarkerEtc.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/For%C3%AAt_Gla%C3%A7on" class="tooltiptext descale">Forêt Glaçon<br>(Futur)</a>
+                </div>
+                <div class="poi marker" style="left: 1179px;top: 1413px;">
+                    <img class="markDot" src="MarkerEtc.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Montagne_Sombre_Gel" class="tooltiptext descale">Montagne Sombre Gel<br>(Futur)</a>
+                </div>
+                <div class="poi marker" style="left: 1242px;top: 1411px;">
+                    <img class="markDot" src="MarkerEtc.svg" alt=" ">
+                    <a href="https://www.pokepedia.fr/Montagne_Glacier" class="tooltiptext descale">Montagne Glacier<br>(Futur)</a>
+                </div>
+                
+            </div>
+            
+            <div class="container_icon" id="markers_continent">
+                <div class="labelDiv" style="left: 755px;top: 765px;">
+                    Terre de l'Eau
+                </div>
+                <div class="labelDiv" style="left: 1472px;top: 155px;">
+                    Terre du Vent
+                </div>
+                <div class="labelDiv" style="left: 1475px;top: 1445px;">
+                    Terre des Plantes
+                </div>
+                <div class="labelDiv" style="left: 335px;top: 145px;">
+                    Terre de la Brume
+                </div>
+                <div class="labelDiv" style="left: 125px;top: 1425px;">
+                    Terre du Sable
+                </div>
+                <div class="labelDiv" style="font-size:30px;left: 805px;top: 1122px;">
+                    Océan des Sept Mystères
+                </div>
+                <div class="labelDiv" style="font-size:30px;left: 705px;top: 95px;">
+                    Terre Inconnue
+                </div>
+            </div>
+            
+            <img style="width:100%; pointer-events: all;" src="https://i.imgur.com/sUsQAyy.jpg" alt="Main Map" />
+        </div>
+    </div>
+
+    <div class="buttons" style="position: absolute;bottom: 0; left: 0; margin:8px;">
+        <button class="sbt" onclick="zoomin()">+</button>
+        <button class="sbt" onclick="zoomout()">-</button>
+        <button class="sbt" onclick="map.center()">Reset</button>
+    </div>
+    <script>
+        var linkTimer;
+        var linkTime = 800; //length of time user must touch tag before opening link
+        var link;
+        
+        //Show/goto on touch (open link)
+        function touchVisLong() { 
+            linkTimer = null;
+            if (link) window.location = link; 
+        };
+        
+        //Show/goto on touch (start timer)
+		function touchVisIn(e) 
+        {
+            e.preventDefault();
+            if (!linkTimer) {
+                link = e.target.href;
+                linkTimer = setTimeout(touchVisLong, linkTime);
+            }
+        }
+
+        //Show/goto on touch (cancel timer / toggle visibility)
+        function touchVisOut(e) 
+        {
+            if (linkTimer) {
+                clearTimeout(linkTimer);
+                linkTimer = null;
+                link = null;
+                
+                if (e.target.parentNode.classList.contains("touched"))
+                    e.target.parentNode.classList.remove("touched");
+                else
+                    e.target.parentNode.classList.add("touched");
+            }
+        }
+        
+        //Show/goto on touch (cancel timer)
+        function touchVisMov(e) 
+        {
+            if (linkTimer) {
+                clearTimeout(linkTimer);
+                linkTimer = null;
+                link = null;
+            }
+        }
+        
+        function zoomin() {
+            map.zoomTo(container.clientWidth/2,container.clientHeight/2,1.25)
+        }
+        
+        function zoomout() {
+            map.zoomTo(container.clientWidth/2,container.clientHeight/2,0.75)
+        }
+	
+        //keep the map container the appropriate hight
+        function pageResize() {
+            container.style.height = ""+(window.innerHeight-bar.scrollHeight-8)+"px";
+        }
+		
+        var container = document.getElementById("panzoomContainer");
+        var bar = document.getElementById("buttonBar");
+        
+        pageResize();
+
+        //Start up panzoom map mover
+		if (typeof(panzoom) !== "function")
+		{
+			container.innerHTML="<strong>Unable to load Panzoom script</strong><br>Please disable your ad-blocker to view the map, or completely disable scrips to view the basic version of the map.";
+		}
+        else
+		{
+            var mapObj = document.getElementById('panzoom')
+            map = panzoom(mapObj, {
+                smoothScroll: false,
+                autocenter: true, 
+                minZoom: 0.1,
+                maxZoom: 5
+            });
+            
+            // Snap to the max translate value when panning past the end of the "bounds"
+            map.on('panend', e => {
+                const pos = e.getTransform();
+                const bound = mapObj.getBoundingClientRect();
+                
+                if (bound.width > container.clientWidth) {
+                    if (pos.x > container.clientWidth/2) pos.x = container.clientWidth/2;
+                    else if (pos.x < container.clientWidth/2 - bound.width) pos.x = container.clientWidth/2 - bound.width;
+                    if (pos.y > container.clientHeight/2) pos.y = container.clientHeight/2;
+                    else if (pos.y < container.clientHeight/2 - bound.height) pos.y = container.clientHeight/2 - bound.height;
+                }
+                else {
+                    if (pos.x < -bound.width/4) pos.x = -bound.width/4;
+                    else if (pos.x > container.clientWidth - 3*bound.width/4) pos.x = container.clientWidth - 3*bound.width/4; 
+                    if (pos.y < -bound.height/4) pos.y = -bound.height/4;
+                    else if (pos.y > container.clientHeight - 3*bound.height/4) pos.y = container.clientHeight - 3*bound.height/4; 
+                }
+                
+                e.moveTo(pos.x,pos.y);
+               
+            });
+		}
+
+        {
+            var vis = container.querySelectorAll('.poi');
+            
+            for (var i =0; i<vis.length; i++) {
+                vis[i].addEventListener("touchstart", touchVisIn, false);
+                vis[i].addEventListener("touchend", touchVisOut, false);
+                vis[i].addEventListener("touchmove", touchVisMov, false);
+            }
+        
+        }
+
+    </script>
+</body>
+</html>
